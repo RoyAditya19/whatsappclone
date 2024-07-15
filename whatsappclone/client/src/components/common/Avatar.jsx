@@ -1,7 +1,10 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
 import ContextMenu from "./ContextMenu";
+import PhotoPicker from "./PhotoPicker";
+import PhotoLibrary from "./PhotoLibrary";
+import CapturePhoto from "./CapturePhoto";
 
 function Avatar({type,image,setImage}) {
   const [hover, setHover] = useState(false)
@@ -9,19 +12,60 @@ function Avatar({type,image,setImage}) {
   const [contextMenuCordinates, setContextMenuCordinates] = useState({
     x:0, y:0,
   });
+  const [grabPhoto, setGrabphoto] = useState(false)
+  const [showPhotoLibrary, setShowPhotoLibrary] = useState(false)
+  const [showCapturePhoto, setShowCapturePhoto] = useState(false)
 
   const showContextMenu = (e)=>{
     e.preventDefault()
     setContextMenuCordinates({x:e.pageX, y:e.pageY});
     setIsContentMenuVisible(true)
   }
+  useEffect(() => {
+    if(grabPhoto)
+    {
+      const data = document.getElementById("photo-picker");
+      data.click();
+      document.body.onfocus = (e)=>{
+        setTimeout(() => {
+          setGrabphoto(false)
+        }, 1000);
+      }
+    }
+  }, [grabPhoto])
+  
 
   const contextMenuOptions = [
-    {name: "Take Photo", callback: () => {} },
-    {name: "Choose From Library", callback: () => {} },
-    {name: "Upload Photo", callback: () => {} },
-    {name: "Remove Photo", callback: () => {} },
+    {name: "Take Photo", callback: () => {
+      setShowCapturePhoto(true)
+    } },
+    {name: "Choose From Library", callback: () => {
+      setShowPhotoLibrary(true)
+    } },
+    {name: "Upload Photo", callback: () => {
+      setGrabphoto(true);
+    } },
+    {name: "Remove Photo", callback: () => {
+      setImage("/default_avatar.png")
+    } },
   ];
+
+  //the below code in photopickerchange is actually storing the image file as base64. it's not the best way to store the images but it is also a 
+  // way to store the image. generally we should upload the image in our servers and not in this way. it's just for learning purpose.
+  const photoPickerChange = async (e)=>{
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    const data = document.createElement("img")
+    reader.onload=function(event){
+      data.src = event.target.result;
+      data.setAttribute("data-src", event.target.result)
+    };
+    reader.readAsDataURL(file);
+    setTimeout(() => {
+      console.log(data.src);
+      setImage(data.src)
+    }, 100);
+  };
   return <>
   <div className="flex items-center justify-center">
     { type === "sm" && (
@@ -58,6 +102,9 @@ function Avatar({type,image,setImage}) {
      setContextMenu={setIsContentMenuVisible}
      />
   )}
+  {showCapturePhoto && <CapturePhoto setImage={setImage} hide={setShowCapturePhoto} />}
+  {showPhotoLibrary && <PhotoLibrary setImage={setImage} hidePhotoLibrary={setShowPhotoLibrary} />}
+  {grabPhoto && <PhotoPicker onChange={photoPickerChange} />}
   </>;
 }
 
