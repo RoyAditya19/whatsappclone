@@ -11,6 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/uploads/images", express.static("uploads/images"));
+
 app.use("/api/auth", AuthRoutes)
 app.use("/api/messages",MessageRoutes)
 
@@ -30,4 +32,13 @@ io.on("connection", (socket)=>{
      socket.on("add-user",(userId)=>{
           onlineUsers.set(userId, socket.id);
      });
+     socket.on("send-msg", (data)=> {
+          const sendUserSocket = onlineUsers.get(data.to);
+          if (sendUserSocket) {
+               socket.to(sendUserSocket).emit("msg-recieve", {
+                    from: data.from,
+                    message: data.message,
+               });
+               }
+     })
 });
