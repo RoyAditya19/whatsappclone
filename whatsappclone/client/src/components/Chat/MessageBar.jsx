@@ -1,6 +1,6 @@
 import { reducerCases } from "@/context/constants";
 import { useStateProvider } from "@/context/StateContext";
-import { ADD_IMAGE_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
+import { ADD_IMAGE_MESSAGE_ROUTE, ADD_MESSAGE_ROUTE } from "@/utils/ApiRoutes";
 import axios from "axios";
 import EmojiPicker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
@@ -9,7 +9,8 @@ import { FaMicrophone } from "react-icons/fa";
 import {ImAttachment} from "react-icons/im"
 import { MdSend } from "react-icons/md";
 import PhotoPicker from "../common/PhotoPicker";
-import CaptureAudio from "../common/CaptureAudio";
+import dynamic from "next/dynamic";
+const CaptureAudio = dynamic(()=>import( "../common/CaptureAudio"),{ssr:false,});
 
 function MessageBar() {
   const [{userInfo, currentChatUser,socket}, dispatch] = useStateProvider();
@@ -34,7 +35,6 @@ function MessageBar() {
                          to: currentChatUser.id,
                     },
                     })
-                    alert("axios")
                     if(response.status === 201)
                     {
                          socket.current.emit("send-msg",{
