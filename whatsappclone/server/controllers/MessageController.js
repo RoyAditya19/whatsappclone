@@ -171,16 +171,15 @@ export const getInitialContactswithMessages = async(req,res,next)=>{
                     };
                     if(isSender){
                          user = {
-                              ...user, ...msg.reciever, totalUnreadMessages: 0
+                              ...user, ...msg.reciever, totalUnreadMessages: 0,
                          }
                     } else {
                          user = {
                               ...user,
                               ...msg.sender,
-                              totalUnreadMessages:messageStatus !== 'read' ? 1: 0,
+                              totalUnreadMessages: messageStatus !== 'read' ? 1: 0,
                          };
                     }
-
                     users.set(calculatedId,{...user});
                } else if(messageStatus !== "read" && !isSender){
                     const user = users.get(calculatedId);
