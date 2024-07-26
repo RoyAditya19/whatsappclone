@@ -32,7 +32,7 @@ export const onBoardUser = async(req,res,next)=>{
         });
         return res.json({msg: "Success", status: true, user});
     } catch (error) {
-        
+        next(error)
     }
 }
 
