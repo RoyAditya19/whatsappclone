@@ -18,3 +18,8 @@ export const reducerCases = {
     SET_EXIT_CHAT: "SET_EXIT_CHAT"
     
 };
+
+/* This file defines a set of constants representing different types of actions that can be dispatched in the application. 
+These action types are stored in the reducerCases object and include actions like setting user information, changing the current chat user,
+ handling messages, and managing video and voice calls, among others. These constants serve as identifiers for the specific operations that the
+  state reducer will handle in statereducers.js. */

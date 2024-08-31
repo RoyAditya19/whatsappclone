@@ -26,13 +26,14 @@ const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
      {
           name: "Exit",
           callback: async()=>{
-               dispatch({type: reducerCases.SET_EXIT_CHAT});
+               dispatch({type: reducerCases.SET_EXIT_CHAT}); //This line triggers an action to update the global state. The action type SET_EXIT_CHAT is dispatched, which, based on the reducer logic in StateReducers.js, will reset the currentChatUser in the global state, effectively indicating that the user has exited the chat.
           }
      }
    ];
 
-
-  const handleVoiceCall = ()=>{
+   const handleVoiceCall = ()=>{
+        // below line dispatches an action to update the global state with a new voice call. The action type SET_VOICE_CALL updates the voiceCall property in the global state with details about the call, including the current chat user’s information, call type, and a unique room ID generated using Date.now().
+        // These properties (such as `type` and `roomId`) are then accessible in other components, like `VoiceCall.jsx`, through the `useStateProvider` hook, allowing the components to respond to the updated state.
      dispatch({
           type: reducerCases.SET_VOICE_CALL,
           voiceCall:{
@@ -73,7 +74,7 @@ const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
       <IoVideocam className="text-panel-header-icon cursor-pointer text-xl"
           onClick={handleVideoCall}
        />
-      <BiSearchAlt2 className="text-panel-header-icon cursor-pointer text-xl" onClick={()=>dispatch({type: reducerCases.SET_MESSAGE_SEARCH})} />
+      <BiSearchAlt2 className="text-panel-header-icon cursor-pointer text-xl" onClick={()=>dispatch({type: reducerCases.SET_MESSAGE_SEARCH})} /> {/*This line dispatches an action that toggles the message search feature in the global state. The action type SET_MESSAGE_SEARCH will likely toggle a boolean value that controls whether the message search UI is displayed or not. */}
       <BsThreeDotsVertical className="text-panel-header-icon cursor-pointer text-xl" onClick={(e)=>showContextMenu(e)} id="context-opener" />
       {isContextMenuVisible && (
                     <ContextMenu

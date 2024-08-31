@@ -7,7 +7,7 @@ import { MdOutlineCallEnd } from "react-icons/md";
 import { GET_CALL_TOKEN } from "@/utils/ApiRoutes";
 import { ZegoExpressEngine } from "zego-express-engine-webrtc";
 function Container({ data }) {
-     const [{socket,userInfo},dispatch] = useStateProvider()
+     const [{socket,userInfo},dispatch] = useStateProvider()  //This line is using the useStateProvider hook to access the global state managed by the Context API. The state variables socket and userInfo are destructured from the global state, and dispatch is used to update the global state when needed.
      const [callAccepted, setCallAccepted] = useState(false)
      const [token, setToken] = useState(undefined)
      const [zgVar, setZgVar] = useState(undefined)
@@ -62,7 +62,7 @@ function Container({ data }) {
                               zg.destroyStream(localStream);
                               zg.stopPublishingStream(streamList[0].streamID);
                               zg.logoutRoom(data.roomId.toString());
-                              dispatch({type:reducerCases.END_CALL});
+                              dispatch({type:reducerCases.END_CALL}); //This line uses the dispatch function to send an action to the reducer, specifically to handle the END_CALL action type. This action will trigger a state update, modifying the global state to reflect that the call has ended (e.g., resetting related variables like voiceCall, videoCall, etc.).
                          }
                     })
                     await zg.loginRoom(
