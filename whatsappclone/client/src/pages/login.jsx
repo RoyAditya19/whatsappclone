@@ -20,9 +20,9 @@ function login() {
   }, [userInfo,newUser])
   
   const handleLogin = async()=>{
-    const provider = new GoogleAuthProvider()
+    const provider = new GoogleAuthProvider() //firebase being used for getting the required details from the google login.
     const {
-      user:{ displayName: name, email, photoUrl:profileImage},
+      user:{ displayName: name, email, photoUrl:profileImage}, //here displayname and photoUrl are being renamed to name and profileImage respectively.
   } = await signInWithPopup(firebaseAuth, provider);
   try {
     if(email)

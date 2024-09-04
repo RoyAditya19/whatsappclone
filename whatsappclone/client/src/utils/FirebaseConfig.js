@@ -13,3 +13,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(app);
+
+// the above code firebaseconfig was used to get the mail-id, name and id of the user. we need to add google provider(refer timestamp 15:25) and then we are good to go.

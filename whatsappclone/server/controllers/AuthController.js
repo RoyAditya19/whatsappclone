@@ -1,6 +1,7 @@
 import getPrismaInstance from "../utils/PrismaClient.js";
 import {generateToken04} from "../utils/TokenGenerator.js"
 
+//a checkuser function which will be utilised for finding if the user with the same emailid exists or not.
 export const checkUser = async(req,res,next)=>{
     try {
         const {email} = req.body;
