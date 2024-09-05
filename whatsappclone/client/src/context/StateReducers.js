@@ -17,6 +17,7 @@ export const initialState = {
   incomingVideoCall: undefined,
 };
 
+//state below is the currentstate and not the initialstate and action would be passed whenever we use the dispatch method.
 const reducer = (state, action) => {
   switch (action.type) {
     case reducerCases.SET_USER_INFO: {

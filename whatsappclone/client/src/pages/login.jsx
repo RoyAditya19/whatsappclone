@@ -30,7 +30,7 @@ function login() {
         const {data} = await axios.post(CHECK_USER_ROUTE, {email});
         if(!data.status)
           {
-            dispatch({type:reducerCases.SET_NEW_USER, newUser:true});
+            dispatch({type:reducerCases.SET_NEW_USER, newUser:true}); //when we are using this dispatch both the type and newUser are being send as an action, so when it goes to the reducer (it consist state and action) these two variables are send through the action parameter only.
             dispatch({ type:reducerCases.SET_USER_INFO, userInfo:{name,email,profileImage,status:"",},});
             router.push("/onboarding");
           }else{
