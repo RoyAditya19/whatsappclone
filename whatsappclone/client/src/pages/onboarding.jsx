@@ -67,8 +67,16 @@ function onboarding() {
     <h2 className="text-2xl ">Create your profile</h2>
     <div className="flex gap-6 mt-6">
       <div className="flex flex-col items-center justify-center mt-5 gap-6">
-      <Input name="Display name" state={name} setState={setName} label />
+      <Input name="Display name" state={name} setState={setName} label /> 
       <Input name="About" state={about} setState={setAbout} label />
+      {/*The setState function (passed from the parent component) is responsible for updating the state. 
+      When setState is called with the new value from e.target.value, React updates the state of the parent component. 
+      This causes the parent component to re-render, which, in turn, re-renders the Input component with the updated state. */}
+
+      {/* Rendering: The Input component above receives state and setState as props. The input field's value is set to state. 
+      When the user types in the input field, the onChange event is triggered, which then calls the setState with the new input value.
+     setState updates the state in the parent component. This triggers a re-render of both the parent and Input components.
+     On re-render, the input field's value is updated with the new state, reflecting the user's input. */}
       <div className="flex items-center justify-center">
         <button className="flex items-center justify-center gap-7 bg-search-input-container-background p-5 rounded-lg" onClick={onboardUserHandler} >Create Profile</button>
       </div>
