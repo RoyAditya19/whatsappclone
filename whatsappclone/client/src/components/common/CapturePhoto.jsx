@@ -3,6 +3,18 @@ import {IoClose} from "react-icons/io5"
 
 function CapturePhoto({hide, setImage}) {
 
+     /* When the component loads, the useEffect hook initiates the process of starting the camera. 
+      The function `navigator.mediaDevices.getUserMedia` is responsible for accessing the user's camera. 
+      It requests video access (without audio), and once granted, the camera stream is assigned to the `srcObject` of the `videoRef` reference.
+      This binds the live camera feed to the video tag(below) in the DOM, allowing the user to see the camera preview.
+      The `stream` object holds the media tracks (video stream), and these tracks are stopped when the component is unmounted to release the camera.
+
+      The `capturePhoto` function is triggered when the user clicks the button below the video feed.
+      It creates a canvas element, captures the current video frame by drawing it onto the canvas using `drawImage`.
+      The canvas image is then converted to a base64 URL using `canvas.toDataURL("image/jpg")`, which is passed to `setImage` to store the captured photo.
+      After the image is captured, the `hide(false)` function is called to close the camera modal.
+      */
+
   useEffect(() => {
     let stream;
     const startCamera = async()=>{
