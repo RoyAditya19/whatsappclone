@@ -22,6 +22,9 @@ function onboarding() {
   const onboardUserHandler = async()=>{
     if(validateDetails()){
         const email = userInfo.email
+        //below axios.post is responsible for pushing the data to the database. let's understand how it happens: below input and avatar component has sent the setimage and setabout as props.
+        //now how the image and about is getting updated with the help of re-rendering function, has been explained below. so this is the way how the data is being send to the database.
+        //and later userinfo from context api is used to update the userinfo globally 
         try {
           const {data}= await axios.post(ONBOARD_USER_ROUTE,{
             email,
@@ -29,6 +32,8 @@ function onboarding() {
             about,
             image,
           });
+          //after entering the login details, it checks that whether the user exists already or not. if not then
+          //it sends to the onboarding page, else it sends to the chat page. 
           if(data.status){
             dispatch({type:reducerCases.SET_NEW_USER, newUser:false});
             dispatch({
